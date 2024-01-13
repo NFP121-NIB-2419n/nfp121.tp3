@@ -1,76 +1,78 @@
 package question2;
 
+
+import java.util.Vector;
 import question1.PilePleineException;
 import question1.PileVideException;
 
-import java.util.Vector;
-
-/**
- * Décrivez votre classe PileVector ici.
- * 
- * @author (votre nom)
- * @version (un numéro de version ou une date)
- */
 public class Pile3 implements PileI {
 
-	private Vector<Object> v;
+    private Vector<Object> elements;
 
-	public Pile3() {
-		this(0);
-	}
+    public Pile3() {
+        this.elements = new Vector<>();
+    }
 
-	public Pile3(int taille) {
-		// traiter le cas <=0
-		// à compléter
-	}
+    @Override
+    public void empiler(Object o) throws PilePleineException {
+        elements.add(o);
+    }
 
-	public void empiler(Object o) throws PilePleineException {
-		// à compléter
-	}
+    @Override
+    public Object depiler() throws PileVideException {
+        if (estVide()) {
+            throw new PileVideException();
+        }
+        Object elementDepile = elements.lastElement();
+        elements.removeElementAt(elements.size() - 1);
+        return elementDepile;
+    }
 
-	public Object depiler() throws PileVideException {
-		// à compléter
-		return null;
-	}
+    @Override
+    public Object sommet() throws PileVideException {
+        if (estVide()) {
+            throw new PileVideException();
+        }
+        return elements.lastElement();
+    }
 
-	public Object sommet() throws PileVideException {
-		// à compléter
-		return null;
-	}
+    @Override
+    public int capacite() {
+// La capacit� n'est pas directement applicable � Vector, vous pouvez retourner Integer.MAX_VALUE ou une autre constante
+        return Integer.MAX_VALUE;
+    }
 
-	public int taille() {
-		// à compléter
-		return -1;
-	}
+    @Override
+    public int taille() {
+        return elements.size();
+    }
 
-	public int capacite() {
-		// à compléter
-		return -1;
-	}
+    @Override
+    public boolean estVide() {
+        return elements.isEmpty();
+    }
 
-	public boolean estVide() {
-		// à compléter
-		return false;
-	}
+    @Override
+    public boolean estPleine() {
+        // Vector ne sera jamais pleine alors la fonction retourne toujours false
+        return false;
+    }
 
-	public boolean estPleine() {
-		// à compléter
-		return false;
-	}
+    @Override
+    public boolean equals(Object o) {
+      
+        Pile3 pile3 = (Pile3) o;
 
-	public String toString() {
-		// à compléter
-		return "";
-	}
+        return elements.equals(pile3.elements);
+    }
 
-	public boolean equals(Object o) {
-		// à compléter
-		return false;
-	}
+    @Override
+    public int hashCode() {
+        return elements.hashCode();
+    }
 
-	// fonction fournie
-	public int hashCode() {
-		return toString().hashCode();
-	}
-
+    @Override
+    public String toString() {
+        return elements.toString();
+    }
 }

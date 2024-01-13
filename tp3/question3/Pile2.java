@@ -5,37 +5,69 @@ import question1.PileVideException;
 
 import java.util.Stack;
 
-public class Pile2<T> implements PileI<T>{
-    /** par délégation : utilisation de la class Stack */
+public class Pile2<T> implements PileI<T> {
     private Stack<T> stk;
-    /** la capacité de la pile */
-    private int capacité;
+    private int capacite;
 
-    /** Création d'une pile.
-     * @param taille la "taille maximale" de la pile, doit être > 0
-     */
-    public Pile2(int taille){
-        // à compléter
+    public Pile2(int taille) {
+        if (taille <= 0)
+            throw new IllegalArgumentException("La taille doit �tre sup�rieure � z�ro");
+        this.stk = new Stack<>();
+        this.capacite = taille;
     }
 
-    public Pile2(){
-        // à compléter
+    public Pile2() {
+        this(PileI.CAPACITE_PAR_DEFAUT);
     }
 
-    public void empiler(T o) throws PilePleineException{
-        // à compléter
+    public void empiler(T o) throws PilePleineException {
+        if (estPleine())
+            throw new PilePleineException();
+        stk.push(o);
     }
 
-    public T depiler() throws PileVideException{
-        // à compléter
+    public T depiler() throws PileVideException {
+        if (estVide())
+            throw new PileVideException();
+        return stk.pop();
     }
 
-    public T sommet() throws PileVideException{
-        // à compléter
+    public T sommet() throws PileVideException {
+        if (estVide())
+            throw new PileVideException();
+        return stk.peek();
     }
 
-    // recopier ici toutes les autres méthodes
-    // qui ne sont pas modifiées en fonction
-    // du type des éléments de la pile
+    public int capacite() {
+        return capacite;
+    }
 
-} // Pile2
+    public int taille() {
+        return stk.size();
+    }
+
+    public boolean estVide() {
+        return stk.isEmpty();
+    }
+
+    public boolean estPleine() {
+        return stk.size() == capacite;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pile2)) return false;
+
+        Pile2<?> pile2 = (Pile2<?>) o;
+
+        return stk.equals(pile2.stk);
+    }
+
+    public int hashCode() {
+        return stk.hashCode();
+    }
+
+    public String toString() {
+        return stk.toString();
+    }
+}
